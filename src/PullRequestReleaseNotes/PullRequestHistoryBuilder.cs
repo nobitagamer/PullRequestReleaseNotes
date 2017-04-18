@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using LibGit2Sharp;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace PullRequestReleaseNotes
     {
         private readonly ProgramArgs _programArgs;
         private readonly IPullRequestProvider _pullRequestProvider;
-        private static readonly Regex ParseSemVer = new Regex(@"^(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))?)(\.(?<FourthPart>\d+))?(-(?<Tag>[^\+]*))?(\+(?<BuildMetaData>.*))?$", RegexOptions.Compiled);
+        private static readonly Regex ParseSemVer = new Regex(@"^[vV]?(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))?)(\.(?<FourthPart>\d+))?(-(?<Tag>[^\+]*))?(\+(?<BuildMetaData>.*))?$", RegexOptions.Compiled);
 
         public PullRequestHistoryBuilder(ProgramArgs programArgs)
         {
@@ -23,7 +23,7 @@ namespace PullRequestReleaseNotes
         public List<PullRequestDto> BuildHistory()
         {
             var unreleasedCommits = GetAllUnreleasedMergeCommits();
-            return unreleasedCommits.Select(mergeCommit => _pullRequestProvider.Get(mergeCommit.Message))
+            return unreleasedCommits.AsParallel().Select(mergeCommit => _pullRequestProvider.Get(mergeCommit.Message))
                 .Where(pullRequestDto => pullRequestDto != null).ToList();
         }
 

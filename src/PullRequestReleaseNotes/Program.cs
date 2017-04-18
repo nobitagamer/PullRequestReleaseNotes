@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -52,7 +52,11 @@ namespace PullRequestReleaseNotes
             if (!publishedFile && !publishedConfluencePage && !publishedSlackPost)
                 return false;
             if (!publishedFile || !publishedConfluencePage || !publishedSlackPost)
+            {
                 Console.WriteLine("WARNING: Failed to publish release notes  ...");
+                Console.WriteLine("=============================================");
+                Console.WriteLine(combinedMarkdown);
+            }
             return true;
         }
 
@@ -107,7 +111,7 @@ namespace PullRequestReleaseNotes
         private static string BuildVersion()
         {
             var versionText = !string.IsNullOrWhiteSpace(_programArgs.GitVersion) ? _programArgs.GitVersion : "Unreleased";
-            return $"{versionText} ({_programArgs.ReleaseBranchRef.Replace("refs/heads/", string.Empty).ToUpper()}) - XX XXX {DateTime.Now:yyyy}";
+            return $"{versionText} ({_programArgs.ReleaseBranchRef.Replace("refs/heads/", string.Empty).ToUpper()}) - {DateTime.Now:yy}.{DateTime.Now:MM}.{DateTime.Now.GetWeekOfMonth()}";
         }
     }
 }

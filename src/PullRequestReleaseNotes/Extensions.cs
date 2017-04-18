@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using PowerArgs;
@@ -10,7 +11,15 @@ namespace PullRequestReleaseNotes
     {
         private const string InvalidUnixEpochErrorMessage = "Unix epoc starts January 1st, 1970";
 
+        private static readonly GregorianCalendar _gc = new GregorianCalendar();
+
         private static DateTime m_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static int GetWeekOfMonth(this DateTime time)
+        {
+            var first = new DateTime(time.Year, time.Month, 1);
+            return (time.GetWeekOfYear() - first.GetWeekOfYear()) + 1;
+        }
 
         public static DateTime FromTimestamp(this long timestamp)
         {
@@ -24,7 +33,7 @@ namespace PullRequestReleaseNotes
             var delta = dateTime.ToUniversalTime() - m_epoch;
             if (delta.TotalMilliseconds < 0)
                 throw new ArgumentOutOfRangeException(InvalidUnixEpochErrorMessage);
-            return (long)delta.TotalMilliseconds;
+            return (long) delta.TotalMilliseconds;
         }
 
         // convention based link extraction to official documentation, just needs to be prefixed with Doc: or doc: in the pull request body
@@ -46,7 +55,7 @@ namespace PullRequestReleaseNotes
 
 		public static bool CaseInsensitiveContains(this string target, string value)
         {
-            return (target.IndexOf(value, StringComparison.InvariantCultureIgnoreCase) >= 0);
+            return target.IndexOf(value, StringComparison.InvariantCultureIgnoreCase) >= 0;
         }
 
         public static void Merge<T1, T2>(this IDictionary<T1, T2> dictionary, IDictionary<T1, T2> newElements)
@@ -55,6 +64,11 @@ namespace PullRequestReleaseNotes
             foreach (var e in newElements)
                 if (!dictionary.ContainsKey(e.Key))
                     dictionary.Add(e);
+        }
+
+        private static int GetWeekOfYear(this DateTime time)
+        {
+            return _gc.GetWeekOfYear(time, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
         }
     }
 }
