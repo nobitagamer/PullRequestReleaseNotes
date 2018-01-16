@@ -24,7 +24,7 @@ namespace PullRequestReleaseNotes
             var markdown = new StringBuilder();
 
             if (!_programArgs.ReleaseNoteCategorised.Value)
-            { 
+            {
                 foreach (var section in releaseNotes.Sections)
                 {
                     markdown.AppendLine($"## {section.Name}");

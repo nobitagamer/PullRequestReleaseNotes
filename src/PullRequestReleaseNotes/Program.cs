@@ -111,7 +111,7 @@ namespace PullRequestReleaseNotes
         private static string BuildVersion()
         {
             var versionText = !string.IsNullOrWhiteSpace(_programArgs.GitVersion) ? _programArgs.GitVersion : "Unreleased";
-            return $"{versionText} ({_programArgs.ReleaseBranchRef.Replace("refs/heads/", string.Empty).ToUpper()}) - {DateTime.Now:yy}.{DateTime.Now:MM}.{DateTime.Now.GetWeekOfMonth()}";
+            return $"{versionText} ({_programArgs.LocalGitRepository.Head.CanonicalName.Replace("refs/heads/", string.Empty).ToUpper()}) - {DateTime.Now:yy}.{DateTime.Now:MM}.{DateTime.Now.GetWeekOfMonth()}";
         }
     }
 }
