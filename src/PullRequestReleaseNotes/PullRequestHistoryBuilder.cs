@@ -12,7 +12,7 @@ namespace PullRequestReleaseNotes
     {
         private readonly ProgramArgs _programArgs;
         private readonly IPullRequestProvider _pullRequestProvider;
-        private static readonly Regex ParseSemVer = new Regex(@"^[vV]?(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))?)(\.(?<FourthPart>\d+))?(-(?<Tag>[^\+]*))?(\+(?<BuildMetaData>.*))?$", RegexOptions.Compiled);
+        private static readonly Regex ParseSemVer = new Regex(@"^[vV]?(?<SemVer>(?<Major>\d+)(\.(?<Minor>\d+))(\.(?<Patch>\d+))?)(\.(?<FourthPart>\d+))$", RegexOptions.Compiled);
 
         public PullRequestHistoryBuilder(ProgramArgs programArgs)
         {
