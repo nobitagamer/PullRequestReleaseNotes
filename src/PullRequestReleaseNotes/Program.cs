@@ -15,9 +15,11 @@ namespace PullRequestReleaseNotes
 
         private static void Main(string[] args)
         {
+            // See https://stackoverflow.com/questions/32788409/c-sharp-httpwebrequest-the-underlying-connection-was-closed-an-unexpected-error/32789483
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
                 SecurityProtocolType.Tls11 |
                 SecurityProtocolType.Tls12;
+
 
             int exitCode;
             _programArgs = ValidateConfiguration(args);
