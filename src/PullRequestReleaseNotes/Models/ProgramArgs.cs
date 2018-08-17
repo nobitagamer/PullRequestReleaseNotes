@@ -57,6 +57,11 @@ namespace PullRequestReleaseNotes.Models
         [ArgExample("refs/heads/master", "Git head branch reference")]
         public string ReleaseBranchRef { get; set; }
 
+        [ArgShortcut("-gvt")]
+        [YamlMember(Alias = "git-branch-version-tag")]
+        [ArgExample("alpha", "Git branch SemVersion tag")]
+        public string ReleaseBranchVersionTag { get; set; }
+
         [ArgShortcut("-grp")]
         [YamlMember(Alias = "git-repo-path")]
         [ArgExample(@"D:\Dev\Repo", "Local Git repository path")]

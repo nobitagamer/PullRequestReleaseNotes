@@ -82,6 +82,7 @@ namespace PullRequestReleaseNotes
             _programArgs.GitRepositoryPath = _programArgs.GitRepositoryPath ?? args.GitRepositoryPath;
             _programArgs.GitVersion = _programArgs.GitVersion ?? args.GitVersion;
             _programArgs.ReleaseBranchRef = _programArgs.ReleaseBranchRef ?? args.ReleaseBranchRef;
+            _programArgs.ReleaseBranchVersionTag = _programArgs.ReleaseBranchVersionTag ?? args.ReleaseBranchVersionTag;
             _programArgs.ReleaseNoteCategoryPrefix = _programArgs.ReleaseNoteCategoryPrefix ?? args.ReleaseNoteCategoryPrefix;
             _programArgs.ReleaseNoteDateFormat = _programArgs.ReleaseNoteDateFormat ?? args.ReleaseNoteDateFormat;
             _programArgs.ReleaseNoteFormat = _programArgs.ReleaseNoteFormat ?? args.ReleaseNoteFormat;
@@ -212,7 +213,7 @@ namespace PullRequestReleaseNotes
             if (string.IsNullOrWhiteSpace(_programArgs.GitVersion))
                 _programArgs.GitVersion = Environment.GetEnvironmentVariable("GITVERSION_MAJORMINORPATCH");
         }
-     
+
         public void WriteSampleConfig()
         {
             var sampleConfigFile = Path.Combine(_programArgs.LocalGitRepository.Info.WorkingDirectory, YamlSettingsFileName);
