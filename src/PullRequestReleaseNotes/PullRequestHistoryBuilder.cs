@@ -50,8 +50,9 @@ namespace PullRequestReleaseNotes
                     }).GroupBy(o => o.versionTag, o => o).ToList();
 
             var branchTag = this._programArgs.ReleaseBranchVersionTag ?? string.Empty;
-            var tagCommits = tagCommitGroups.Single(g => g.Key == branchTag)
-                .Select(g => g.commit).Where(x => x != null).ToList();
+            var tagCommits = (tagCommitGroups.SingleOrDefault(g => g.Key == branchTag) ?? tagCommitGroups.First())
+                .Select(g => g.commit)
+                .Where(x => x != null).ToList();
 
             var branchAncestors = this._programArgs.LocalGitRepository.Commits
                 .QueryBy(new CommitFilter { IncludeReachableFrom = branchReference }).Where(commit => commit.Parents.Count() > 1);
