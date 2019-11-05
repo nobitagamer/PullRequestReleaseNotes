@@ -1,5 +1,5 @@
 install:
-  - choco install gitversion.portable -y
+  - choco install gitversion.portable -y --version=4.0.0
   
 image: Visual Studio 2019
   
